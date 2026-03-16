@@ -812,8 +812,8 @@ body.cursor-hover .cursor-ring {
 
 /* Character cards — 3D flip */
 .character-card {
-  flex: 0 0 290px;
-  height: 420px;
+  flex: 0 0 420px;
+  height: 580px;
   scroll-snap-align: center;
   perspective: 1000px;
   position: relative;
