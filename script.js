@@ -1,5 +1,6 @@
 /* ============================================================
-   CHAINSAW MAN — Fan Site JavaScript
+   CHAINSAW MAN — Fan Site JavaScript v2
+   Modern interactions, particles, 3D cards, chainsaw buttons
    Pure vanilla JS — no external libraries
    ============================================================ */
 
@@ -7,21 +8,92 @@
   'use strict';
 
   /* ============================================================
-     CUSTOM CURSOR
+     CUSTOM CURSOR — ring + dot with hover expansion
      ============================================================ */
-  const cursor = document.getElementById('custom-cursor');
+  var cursorEl = document.getElementById('custom-cursor');
+  var cursorX = 0, cursorY = 0;
+  var cursorVisible = window.matchMedia('(pointer: fine)').matches;
 
-  if (cursor && window.matchMedia('(pointer: fine)').matches) {
+  if (cursorEl && cursorVisible) {
     document.addEventListener('mousemove', function (e) {
-      cursor.style.transform =
-        'translate(' + (e.clientX - 12) + 'px, ' + (e.clientY - 12) + 'px)';
+      cursorX = e.clientX;
+      cursorY = e.clientY;
+      cursorEl.style.transform = 'translate(' + cursorX + 'px, ' + cursorY + 'px)';
+    });
+
+    // Expand cursor ring on interactive elements
+    var interactives = document.querySelectorAll('a, button, .character-card, .devil-card, .chainsaw-btn, .fact-card, .theme-card');
+    interactives.forEach(function (el) {
+      el.addEventListener('mouseenter', function () { document.body.classList.add('cursor-hover'); });
+      el.addEventListener('mouseleave', function () { document.body.classList.remove('cursor-hover'); });
     });
   }
 
   /* ============================================================
-     STICKY NAVIGATION — transparent → frosted glass on scroll
+     FLOATING PARTICLES — blood/ember effect on canvas
      ============================================================ */
-  const nav = document.getElementById('main-nav');
+  var canvas = document.getElementById('particles-canvas');
+  if (canvas) {
+    var ctx = canvas.getContext('2d');
+    var particles = [];
+    var particleCount = 40;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function Particle() {
+      this.reset();
+    }
+
+    Particle.prototype.reset = function () {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.size = Math.random() * 3 + 1;
+      this.speedX = (Math.random() - 0.5) * 0.5;
+      this.speedY = -(Math.random() * 0.8 + 0.2);
+      this.opacity = Math.random() * 0.4 + 0.1;
+      this.life = Math.random() * 200 + 100;
+      this.maxLife = this.life;
+    };
+
+    Particle.prototype.update = function () {
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.life--;
+      this.opacity = (this.life / this.maxLife) * 0.4;
+      if (this.life <= 0) this.reset();
+    };
+
+    Particle.prototype.draw = function () {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(204, 0, 0, ' + this.opacity + ')';
+      ctx.fill();
+    };
+
+    for (var i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(function (p) {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+  }
+
+  /* ============================================================
+     STICKY NAVIGATION — transparent → frosted glass
+     ============================================================ */
+  var nav = document.getElementById('main-nav');
 
   function handleNavScroll() {
     if (window.scrollY > 80) {
@@ -32,35 +104,35 @@
   }
 
   window.addEventListener('scroll', handleNavScroll, { passive: true });
-  handleNavScroll(); // run on load
+  handleNavScroll();
 
   /* ============================================================
-     MOBILE NAV TOGGLE
+     MOBILE NAV TOGGLE — with animated hamburger
      ============================================================ */
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.querySelector('.nav-links');
+  var navToggle = document.getElementById('nav-toggle');
+  var navLinks = document.querySelector('.nav-links');
 
   if (navToggle && navLinks) {
     navToggle.addEventListener('click', function () {
       navLinks.classList.toggle('open');
+      navToggle.classList.toggle('active');
     });
 
-    // Close menu when a link is clicked
     navLinks.querySelectorAll('a').forEach(function (link) {
       link.addEventListener('click', function () {
         navLinks.classList.remove('open');
+        navToggle.classList.remove('active');
       });
     });
   }
 
   /* ============================================================
-     SMOOTH SCROLLING for all anchor links
+     SMOOTH SCROLLING
      ============================================================ */
   document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
     anchor.addEventListener('click', function (e) {
       var targetId = this.getAttribute('href');
       if (targetId === '#') return;
-
       var target = document.querySelector(targetId);
       if (target) {
         e.preventDefault();
@@ -70,35 +142,29 @@
   });
 
   /* ============================================================
-     INTERSECTION OBSERVER — timeline nodes & general reveal
+     SCROLL REVEAL — Intersection Observer for all reveal elements
      ============================================================ */
-  var timelineItems = document.querySelectorAll('.timeline-item');
-
   if ('IntersectionObserver' in window) {
-    var timelineObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          // Handle staggered delays via data-delay attribute
+          var delay = parseInt(entry.target.getAttribute('data-delay') || '0', 10);
+          setTimeout(function () {
             entry.target.classList.add('visible');
-          }
-        });
-      },
-      { threshold: 0.2, rootMargin: '0px 0px -50px 0px' }
-    );
+          }, delay);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-    timelineItems.forEach(function (item) {
-      timelineObserver.observe(item);
-    });
-  } else {
-    // Fallback: just show everything
-    timelineItems.forEach(function (item) {
-      item.classList.add('visible');
+    // Observe all revealable elements
+    document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right, .reveal-text, .timeline-item').forEach(function (el) {
+      revealObserver.observe(el);
     });
   }
 
   /* ============================================================
      ANIMATED NUMBER COUNTERS
-     Counts up when the element scrolls into view
      ============================================================ */
   var counters = document.querySelectorAll('.counter');
   var countedSet = new Set();
@@ -106,163 +172,307 @@
   function animateCounter(el) {
     var target = parseInt(el.getAttribute('data-target'), 10);
     if (isNaN(target)) return;
-
-    var duration = 1500; // ms
+    var duration = 1800;
     var startTime = null;
 
     function step(timestamp) {
       if (!startTime) startTime = timestamp;
       var progress = Math.min((timestamp - startTime) / duration, 1);
-      // Ease-out quad
-      var eased = 1 - (1 - progress) * (1 - progress);
+      var eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
       el.textContent = Math.floor(eased * target);
-
       if (progress < 1) {
         requestAnimationFrame(step);
       } else {
         el.textContent = target;
       }
     }
-
     requestAnimationFrame(step);
   }
 
   if ('IntersectionObserver' in window && counters.length > 0) {
-    var counterObserver = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting && !countedSet.has(entry.target)) {
-            countedSet.add(entry.target);
-            animateCounter(entry.target);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
+    var counterObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting && !countedSet.has(entry.target)) {
+          countedSet.add(entry.target);
+          animateCounter(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(function (c) { counterObserver.observe(c); });
+  }
 
-    counters.forEach(function (counter) {
-      counterObserver.observe(counter);
+  /* ============================================================
+     STAT BAR ANIMATIONS (Devils section)
+     ============================================================ */
+  if ('IntersectionObserver' in window) {
+    var statObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          var fills = entry.target.querySelectorAll('.stat-fill');
+          fills.forEach(function (fill) {
+            var w = fill.getAttribute('data-width') || '50';
+            fill.classList.add('animated');
+            fill.style.width = w + '%';
+          });
+        }
+      });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll('.devil-card').forEach(function (card) {
+      statObserver.observe(card);
     });
   }
 
   /* ============================================================
-     CHARACTER CAROUSEL — arrow controls + touch/swipe
+     CHARACTER CARD — 3D flip on button click
+     ============================================================ */
+  document.querySelectorAll('.character-card').forEach(function (card) {
+    var flipBtn = card.querySelector('.card-flip-btn');
+    var backBtn = card.querySelector('.flip-back-btn');
+
+    if (flipBtn) {
+      flipBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        card.classList.add('flipped');
+      });
+    }
+
+    if (backBtn) {
+      backBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        card.classList.remove('flipped');
+      });
+    }
+  });
+
+  /* ============================================================
+     CHARACTER CARD — 3D tilt effect on hover
+     ============================================================ */
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.tilt-card').forEach(function (card) {
+      card.addEventListener('mousemove', function (e) {
+        if (card.classList.contains('flipped')) return;
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var rotateY = ((x - centerX) / centerX) * 8;
+        var rotateX = ((centerY - y) / centerY) * 8;
+        card.querySelector('.card-inner').style.transform =
+          'rotateY(' + rotateY + 'deg) rotateX(' + rotateX + 'deg)';
+      });
+
+      card.addEventListener('mouseleave', function () {
+        card.querySelector('.card-inner').style.transform = '';
+      });
+    });
+  }
+
+  /* ============================================================
+     CHARACTER CAROUSEL — arrows + swipe
      ============================================================ */
   var carouselTrack = document.querySelector('.carousel-track');
   var btnLeft = document.querySelector('.carousel-btn--left');
   var btnRight = document.querySelector('.carousel-btn--right');
 
   if (carouselTrack) {
-    var scrollAmount = 310; // card width + gap
+    var scrollAmt = 320;
 
     if (btnLeft) {
       btnLeft.addEventListener('click', function () {
-        carouselTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        carouselTrack.scrollBy({ left: -scrollAmt, behavior: 'smooth' });
       });
     }
-
     if (btnRight) {
       btnRight.addEventListener('click', function () {
-        carouselTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        carouselTrack.scrollBy({ left: scrollAmt, behavior: 'smooth' });
       });
     }
 
-    // Touch/swipe support
+    // Touch/swipe
     var touchStartX = 0;
-    var touchEndX = 0;
-    var isSwiping = false;
+    carouselTrack.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
 
-    carouselTrack.addEventListener(
-      'touchstart',
-      function (e) {
-        touchStartX = e.changedTouches[0].screenX;
-        isSwiping = true;
-      },
-      { passive: true }
-    );
-
-    carouselTrack.addEventListener(
-      'touchmove',
-      function () {
-        // Let the browser handle native scroll
-      },
-      { passive: true }
-    );
-
-    carouselTrack.addEventListener(
-      'touchend',
-      function (e) {
-        if (!isSwiping) return;
-        isSwiping = false;
-        touchEndX = e.changedTouches[0].screenX;
-        var diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > 50) {
-          if (diff > 0) {
-            carouselTrack.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-          } else {
-            carouselTrack.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-          }
-        }
-      },
-      { passive: true }
-    );
+    carouselTrack.addEventListener('touchend', function (e) {
+      var diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) {
+        carouselTrack.scrollBy({ left: diff > 0 ? scrollAmt : -scrollAmt, behavior: 'smooth' });
+      }
+    }, { passive: true });
   }
 
   /* ============================================================
-     HERO PARALLAX EFFECT
+     CHAINSAW BUTTONS — rev animation on click
+     Click makes them vibrate like a chainsaw revving,
+     also triggers the hero chainsaw to rev
+     ============================================================ */
+  var chainsawHero = document.querySelector('.chainsaw-hero');
+
+  document.querySelectorAll('.chainsaw-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      // Add revving vibration to button
+      btn.classList.add('revving');
+
+      // Also rev the hero chainsaw if visible
+      if (chainsawHero) {
+        chainsawHero.classList.add('revving');
+      }
+
+      // Stop after 600ms
+      setTimeout(function () {
+        btn.classList.remove('revving');
+        if (chainsawHero) {
+          chainsawHero.classList.remove('revving');
+        }
+      }, 600);
+    });
+
+    // Also rev on mousedown/up for a held-down effect
+    btn.addEventListener('mousedown', function () {
+      btn.classList.add('revving');
+      if (chainsawHero) chainsawHero.classList.add('revving');
+    });
+
+    btn.addEventListener('mouseup', function () {
+      setTimeout(function () {
+        btn.classList.remove('revving');
+        if (chainsawHero) chainsawHero.classList.remove('revving');
+      }, 200);
+    });
+
+    btn.addEventListener('mouseleave', function () {
+      btn.classList.remove('revving');
+    });
+  });
+
+  /* ============================================================
+     CHAINSAW NAV BUTTONS — vibrate on click
+     ============================================================ */
+  document.querySelectorAll('.chainsaw-nav-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      btn.style.animation = 'btnRevVibrate 0.06s infinite alternate';
+      setTimeout(function () {
+        btn.style.animation = '';
+      }, 400);
+    });
+  });
+
+  /* ============================================================
+     HERO PARALLAX
      ============================================================ */
   var heroParallax = document.querySelector('.hero-parallax');
-
   if (heroParallax) {
-    window.addEventListener(
-      'scroll',
-      function () {
-        var scrolled = window.scrollY;
-        // Only apply parallax when hero is in view
-        if (scrolled < window.innerHeight * 1.5) {
-          heroParallax.style.transform = 'translateY(' + scrolled * 0.4 + 'px)';
-        }
-      },
-      { passive: true }
-    );
+    window.addEventListener('scroll', function () {
+      var s = window.scrollY;
+      if (s < window.innerHeight * 1.5) {
+        heroParallax.style.transform = 'translateY(' + (s * 0.35) + 'px)';
+      }
+    }, { passive: true });
   }
 
   /* ============================================================
-     DEVIL ALERT MODAL — fires once per session
+     DEVIL ALERT MODAL
      ============================================================ */
   var modal = document.getElementById('devil-alert-modal');
   var dismissBtn = document.getElementById('modal-dismiss');
 
   if (modal && dismissBtn) {
-    // Only show if not previously dismissed in this session
     if (!sessionStorage.getItem('devilAlertDismissed')) {
-      // Small delay so the page loads first
       setTimeout(function () {
         modal.classList.add('active');
         dismissBtn.focus();
-      }, 800);
+      }, 1000);
     }
 
-    dismissBtn.addEventListener('click', function () {
+    function closeModal() {
       modal.classList.remove('active');
       sessionStorage.setItem('devilAlertDismissed', 'true');
-    });
+    }
 
-    // Also dismiss on overlay click (outside the card)
+    dismissBtn.addEventListener('click', closeModal);
     modal.addEventListener('click', function (e) {
-      if (e.target === modal) {
-        modal.classList.remove('active');
-        sessionStorage.setItem('devilAlertDismissed', 'true');
-      }
+      if (e.target === modal) closeModal();
     });
-
-    // Dismiss on Escape key
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && modal.classList.contains('active')) {
-        modal.classList.remove('active');
-        sessionStorage.setItem('devilAlertDismissed', 'true');
-      }
+      if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
     });
   }
+
+  /* ============================================================
+     DEVIL CARDS — interactive up/down movement on click
+     Cards bounce up when clicked, click again to drop back
+     ============================================================ */
+  document.querySelectorAll('.devil-card').forEach(function (card) {
+    var lifted = false;
+    card.addEventListener('click', function () {
+      if (!lifted) {
+        card.style.transform = 'translateY(-20px) scale(1.04)';
+        card.style.boxShadow = '0 30px 60px rgba(204,0,0,0.3), 0 0 0 2px var(--clr-red)';
+        card.style.zIndex = '10';
+        lifted = true;
+      } else {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+        card.style.zIndex = '';
+        lifted = false;
+      }
+    });
+  });
+
+  /* ============================================================
+     THEME CARDS — expand on click to emphasize
+     ============================================================ */
+  document.querySelectorAll('.theme-card').forEach(function (card) {
+    card.style.cursor = 'pointer';
+    card.addEventListener('click', function () {
+      // Toggle expanded state
+      var isExpanded = card.classList.contains('expanded');
+      // Close all
+      document.querySelectorAll('.theme-card.expanded').forEach(function (c) {
+        c.classList.remove('expanded');
+        c.style.borderLeftWidth = '3px';
+        c.style.paddingLeft = '';
+      });
+      if (!isExpanded) {
+        card.classList.add('expanded');
+        card.style.borderLeftWidth = '6px';
+        card.style.paddingLeft = 'calc(var(--space-md) + 8px)';
+      }
+    });
+  });
+
+  /* ============================================================
+     SCROLL-BASED CHAINSAW REV — hero chainsaw revs harder
+     when user scrolls fast (scroll velocity detection)
+     ============================================================ */
+  var lastScroll = 0;
+  var lastTime = Date.now();
+  var heroSection = document.getElementById('hero');
+
+  if (chainsawHero && heroSection) {
+    window.addEventListener('scroll', function () {
+      var now = Date.now();
+      var dt = now - lastTime;
+      if (dt < 16) return; // throttle
+      var velocity = Math.abs(window.scrollY - lastScroll) / dt;
+      lastScroll = window.scrollY;
+      lastTime = now;
+
+      // Only rev if hero section is visible
+      var heroRect = heroSection.getBoundingClientRect();
+      if (heroRect.bottom > 0 && heroRect.top < window.innerHeight) {
+        if (velocity > 1.5) {
+          chainsawHero.classList.add('revving');
+          clearTimeout(chainsawHero._revTimeout);
+          chainsawHero._revTimeout = setTimeout(function () {
+            chainsawHero.classList.remove('revving');
+          }, 300);
+        }
+      }
+    }, { passive: true });
+  }
+
 })();

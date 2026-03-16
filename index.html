@@ -6,10 +6,10 @@
   <title>CHAINSAW MAN — Fan Site</title>
   <meta name="description" content="An unofficial fan site dedicated to Chainsaw Man by Tatsuki Fujimoto.">
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts — expanded selection -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@300;400;500;600;700;900&family=Permanent+Marker&family=Orbitron:wght@400;700;900&family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -17,30 +17,51 @@
 <body>
 
   <!-- ============================================================
-       CUSTOM CURSOR
+       CURSOR + PARTICLES CANVAS
        ============================================================ -->
-  <div id="custom-cursor" aria-hidden="true"></div>
+  <div id="custom-cursor" aria-hidden="true">
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+  </div>
+  <canvas id="particles-canvas" aria-hidden="true"></canvas>
 
   <!-- ============================================================
-       GRAIN OVERLAY (pseudo-element handled in CSS)
+       BLOOD DRIP TOP DECORATION
        ============================================================ -->
+  <div class="blood-drips" aria-hidden="true">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none">
+      <path d="M0,0 L0,20 Q20,20 20,35 Q20,50 10,60 Q20,50 30,35 Q30,20 50,20 L50,20 Q50,20 50,40 Q50,55 45,60 Q55,50 60,35 Q60,20 80,20 L120,20 Q120,20 120,30 Q120,45 115,60 Q125,40 130,25 Q130,20 160,20 L200,20 Q200,20 200,45 Q200,58 195,60 Q205,50 210,30 Q210,20 240,20 L1440,20 L1440,0 Z" fill="#cc0000"/>
+    </svg>
+  </div>
 
   <!-- ============================================================
        DEVIL ALERT MODAL
        ============================================================ -->
   <div id="devil-alert-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-label="Devil Alert emergency broadcast">
     <div class="modal-card">
+      <div class="modal-scanlines" aria-hidden="true"></div>
       <div class="modal-header">
-        <span class="modal-icon">⚠</span>
-        <h2>DEVIL ALERT</h2>
-        <span class="modal-icon">⚠</span>
+        <div class="modal-warning-icon" aria-hidden="true">
+          <svg viewBox="0 0 60 60" width="50" height="50">
+            <polygon points="30,5 55,50 5,50" fill="none" stroke="#cc0000" stroke-width="3"/>
+            <text x="30" y="43" text-anchor="middle" fill="#cc0000" font-size="24" font-family="'Bebas Neue'">!</text>
+          </svg>
+        </div>
+        <h2 class="glitch-text" data-text="DEVIL ALERT">DEVIL ALERT</h2>
       </div>
       <div class="modal-body">
         <p class="modal-broadcast">— EMERGENCY BROADCAST —</p>
+        <div class="modal-threat-bar">
+          <div class="threat-fill"></div>
+        </div>
         <p>A Devil presence has been detected in your area. Public Safety Devil Hunters have been dispatched. Remain calm and do not make any contracts.</p>
         <p class="modal-classification">THREAT LEVEL: <strong>CATASTROPHIC</strong></p>
       </div>
-      <button id="modal-dismiss" class="btn-dismiss" aria-label="Dismiss devil alert">ACKNOWLEDGED</button>
+      <button id="modal-dismiss" class="chainsaw-btn" aria-label="Dismiss devil alert">
+        <span class="btn-blade" aria-hidden="true"></span>
+        <span class="btn-text">ACKNOWLEDGED</span>
+        <span class="btn-blade" aria-hidden="true"></span>
+      </button>
     </div>
   </div>
 
@@ -48,7 +69,9 @@
        STICKY NAVIGATION
        ============================================================ -->
   <nav id="main-nav" class="nav" aria-label="Main navigation">
-    <a href="#hero" class="nav-logo" aria-label="Back to top">CSM</a>
+    <a href="#hero" class="nav-logo" aria-label="Back to top">
+      <span class="logo-chain">CHAIN</span><span class="logo-saw">SAW</span>
+    </a>
     <ul class="nav-links">
       <li><a href="#about" aria-label="About the series">About</a></li>
       <li><a href="#characters" aria-label="Characters section">Characters</a></li>
@@ -56,7 +79,6 @@
       <li><a href="#arcs" aria-label="Story arcs timeline">Arcs</a></li>
       <li><a href="#themes" aria-label="Themes and legacy">Themes</a></li>
     </ul>
-    <!-- Mobile hamburger -->
     <button id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
       <span></span><span></span><span></span>
     </button>
@@ -67,31 +89,75 @@
        ============================================================ -->
   <section id="hero" class="hero">
     <div class="hero-parallax" aria-hidden="true"></div>
+    <div class="hero-bg-shapes" aria-hidden="true">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
     <div class="hero-content">
-      <h1 class="hero-title">CHAINSAW<br>MAN</h1>
+      <p class="hero-pre-title reveal-text">TATSUKI FUJIMOTO PRESENTS</p>
+      <h1 class="hero-title">
+        <span class="title-line title-line-1 glitch-text" data-text="CHAINSAW">CHAINSAW</span>
+        <span class="title-line title-line-2 glitch-text" data-text="MAN">MAN</span>
+      </h1>
 
-      <!-- Animated chainsaw SVG -->
-      <div class="chainsaw-container" aria-hidden="true">
-        <svg class="chainsaw-svg" viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
-          <!-- Blade body -->
-          <rect x="10" y="25" width="140" height="30" rx="4" fill="#555"/>
-          <!-- Blade edge (chain teeth) -->
-          <path d="M150,25 L190,40 L150,55 Z" fill="#cc0000"/>
-          <!-- Chain teeth along top -->
-          <path d="M15,25 L25,18 L35,25 L45,18 L55,25 L65,18 L75,25 L85,18 L95,25 L105,18 L115,25 L125,18 L135,25 L145,18 L155,25"
-                stroke="#cc0000" stroke-width="3" fill="none"/>
-          <!-- Chain teeth along bottom -->
-          <path d="M15,55 L25,62 L35,55 L45,62 L55,55 L65,62 L75,55 L85,62 L95,55 L105,62 L115,55 L125,62 L135,55 L145,62 L155,55"
-                stroke="#cc0000" stroke-width="3" fill="none"/>
-          <!-- Handle -->
-          <rect x="0" y="20" width="20" height="40" rx="6" fill="#333"/>
-          <!-- Motor circle -->
-          <circle cx="10" cy="40" r="8" fill="#cc0000" class="chainsaw-motor"/>
+      <!-- Large animated chainsaw SVG -->
+      <div class="chainsaw-hero" aria-hidden="true">
+        <svg class="chainsaw-svg-large" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+          <!-- Handle grip -->
+          <rect x="0" y="30" width="35" height="60" rx="8" fill="#1a1a1a" stroke="#333" stroke-width="1"/>
+          <rect x="5" y="38" width="25" height="44" rx="4" fill="#222"/>
+          <!-- Grip lines -->
+          <line x1="8" y1="45" x2="27" y2="45" stroke="#444" stroke-width="1.5"/>
+          <line x1="8" y1="52" x2="27" y2="52" stroke="#444" stroke-width="1.5"/>
+          <line x1="8" y1="59" x2="27" y2="59" stroke="#444" stroke-width="1.5"/>
+          <line x1="8" y1="66" x2="27" y2="66" stroke="#444" stroke-width="1.5"/>
+          <line x1="8" y1="73" x2="27" y2="73" stroke="#444" stroke-width="1.5"/>
+          <!-- Engine body -->
+          <rect x="30" y="25" width="70" height="70" rx="6" fill="#2a2a2a" stroke="#444" stroke-width="1"/>
+          <!-- Motor/pull-cord circle -->
+          <circle cx="65" cy="60" r="20" fill="#1a1a1a" stroke="#cc0000" stroke-width="2"/>
+          <circle cx="65" cy="60" r="12" fill="#cc0000" class="motor-spin"/>
+          <circle cx="65" cy="60" r="4" fill="#1a1a1a"/>
+          <!-- Exhaust -->
+          <rect x="35" y="22" width="15" height="8" rx="2" fill="#333"/>
+          <!-- Blade bar -->
+          <rect x="95" y="45" width="250" height="30" rx="2" fill="url(#blade-gradient)"/>
+          <!-- Blade tip -->
+          <ellipse cx="345" cy="60" rx="15" ry="18" fill="#888" stroke="#666" stroke-width="1"/>
+          <!-- Chain teeth top -->
+          <path d="M100,45 L110,38 L120,45 L130,38 L140,45 L150,38 L160,45 L170,38 L180,45 L190,38 L200,45 L210,38 L220,45 L230,38 L240,45 L250,38 L260,45 L270,38 L280,45 L290,38 L300,45 L310,38 L320,45 L330,38 L340,45"
+                stroke="#cc0000" stroke-width="3" fill="none" class="chain-move"/>
+          <!-- Chain teeth bottom -->
+          <path d="M100,75 L110,82 L120,75 L130,82 L140,75 L150,82 L160,75 L170,82 L180,75 L190,82 L200,75 L210,82 L220,75 L230,82 L240,75 L250,82 L260,75 L270,82 L280,75 L290,82 L300,75 L310,82 L320,75 L330,82 L340,75"
+                stroke="#cc0000" stroke-width="3" fill="none" class="chain-move"/>
+          <!-- Blood splatter on blade -->
+          <circle cx="200" cy="55" r="3" fill="rgba(180,0,0,0.5)"/>
+          <circle cx="260" cy="65" r="4" fill="rgba(180,0,0,0.4)"/>
+          <circle cx="310" cy="52" r="2" fill="rgba(180,0,0,0.6)"/>
+          <!-- Gradient definition -->
+          <defs>
+            <linearGradient id="blade-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#555"/>
+              <stop offset="50%" stop-color="#888"/>
+              <stop offset="100%" stop-color="#666"/>
+            </linearGradient>
+          </defs>
         </svg>
       </div>
 
-      <p class="hero-tagline">The Devil lives in your heart. So does the chainsaw.</p>
-      <a href="#about" class="hero-cta" aria-label="Scroll to learn more">DESCEND</a>
+      <p class="hero-tagline reveal-text">The Devil lives in your heart. So does the chainsaw.</p>
+
+      <a href="#about" class="chainsaw-btn hero-cta" aria-label="Scroll to learn more">
+        <span class="btn-blade" aria-hidden="true"></span>
+        <span class="btn-text">PULL THE CORD</span>
+        <span class="btn-blade" aria-hidden="true"></span>
+      </a>
+
+      <!-- Scroll indicator -->
+      <div class="scroll-indicator" aria-hidden="true">
+        <div class="scroll-arrow"></div>
+      </div>
     </div>
   </section>
 
@@ -100,59 +166,63 @@
        ============================================================ -->
   <section id="about" class="about">
     <div class="section-container">
-      <h2 class="section-title">About the Series</h2>
+      <h2 class="section-title reveal-up">
+        <span class="title-accent" aria-hidden="true">//</span>
+        About the Series
+        <span class="title-accent" aria-hidden="true">//</span>
+      </h2>
 
-      <!-- Decorative chainsaw blade divider -->
-      <div class="chainsaw-divider" aria-hidden="true">
-        <svg viewBox="0 0 600 20" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="10" x2="600" y2="10" stroke="#cc0000" stroke-width="2"/>
-          <path d="M0,4 L10,10 L0,16 L10,10 L20,4 L30,10 L20,16 L30,10 L40,4 L50,10 L40,16 L50,10 L60,4 L70,10 L60,16 L70,10 L80,4 L90,10 L80,16 L90,10 L100,4 L110,10 L100,16 L110,10 L120,4 L130,10 L120,16 L130,10 L140,4 L150,10 L140,16 L150,10 L160,4 L170,10 L160,16 L170,10 L180,4 L190,10 L180,16 L190,10 L200,4 L210,10 L200,16 L210,10 L220,4 L230,10 L220,16 L230,10 L240,4 L250,10 L240,16 L250,10 L260,4 L270,10 L260,16 L270,10 L280,4 L290,10 L280,16 L290,10 L300,4 L310,10 L300,16 L310,10 L320,4 L330,10 L320,16 L330,10 L340,4 L350,10 L340,16 L350,10 L360,4 L370,10 L360,16 L370,10 L380,4 L390,10 L380,16 L390,10 L400,4 L410,10 L400,16 L410,10 L420,4 L430,10 L420,16 L430,10 L440,4 L450,10 L440,16 L450,10 L460,4 L470,10 L460,16 L470,10 L480,4 L490,10 L480,16 L490,10 L500,4 L510,10 L500,16 L510,10 L520,4 L530,10 L520,16 L530,10 L540,4 L550,10 L540,16 L550,10 L560,4 L570,10 L560,16 L570,10 L580,4 L590,10 L580,16 L590,10 L600,4" stroke="#cc0000" stroke-width="1.5" fill="none"/>
-        </svg>
+      <!-- Animated chainsaw divider -->
+      <div class="chainsaw-divider reveal-up" aria-hidden="true">
+        <div class="divider-line"></div>
+        <div class="divider-saw">
+          <svg viewBox="0 0 40 40" width="40" height="40">
+            <circle cx="20" cy="20" r="15" fill="none" stroke="#cc0000" stroke-width="2"/>
+            <circle cx="20" cy="20" r="8" fill="#cc0000"/>
+            <circle cx="20" cy="20" r="3" fill="#0a0a0a"/>
+          </svg>
+        </div>
+        <div class="divider-line"></div>
       </div>
 
       <div class="about-grid">
         <!-- Left: Synopsis -->
-        <article class="about-synopsis">
-          <p>Denji is a teenage boy living in squalor, saddled with his dead father's debt to the yakuza. His only companion is Pochita, a small Devil dog with a chainsaw sprouting from its head. Together they scrape by as unlicensed Devil Hunters, killing Devils for pittance payments.</p>
+        <article class="about-synopsis reveal-left">
+          <p>Denji is a teenage boy living in squalor, saddled with his dead father's debt to the yakuza. His only companion is <strong>Pochita</strong>, a small Devil dog with a chainsaw sprouting from its head. Together they scrape by as unlicensed Devil Hunters, killing Devils for pittance payments.</p>
           <p>When the yakuza betray Denji and feed him to the Zombie Devil, Pochita sacrifices himself — merging with Denji's body to become his heart. Denji rises from the dead as <strong>Chainsaw Man</strong>, a hybrid with the power to sprout chainsaws from his face and arms.</p>
-          <p>Discovered by the enigmatic Makima, Denji is recruited into the Public Safety Devil Hunters — a government agency fighting Devils born from humanity's fears. What follows is a blood-soaked odyssey through betrayal, desire, sacrifice, and the terrible cost of getting what you wish for.</p>
+          <p>Discovered by the enigmatic <strong>Makima</strong>, Denji is recruited into the Public Safety Devil Hunters — a government agency fighting Devils born from humanity's fears. What follows is a blood-soaked odyssey through betrayal, desire, sacrifice, and the terrible cost of getting what you wish for.</p>
         </article>
 
-        <!-- Right: Key Facts -->
-        <aside class="about-facts">
-          <table class="facts-table">
-            <caption class="sr-only">Key facts about Chainsaw Man</caption>
-            <tbody>
-              <tr>
-                <th scope="row">Author</th>
-                <td>Tatsuki Fujimoto</td>
-              </tr>
-              <tr>
-                <th scope="row">Studio</th>
-                <td>MAPPA</td>
-              </tr>
-              <tr>
-                <th scope="row">Anime Episodes</th>
-                <td><span class="counter" data-target="12">0</span></td>
-              </tr>
-              <tr>
-                <th scope="row">Manga Chapters</th>
-                <td><span class="counter" data-target="180">0</span>+</td>
-              </tr>
-              <tr>
-                <th scope="row">Serialization</th>
-                <td>Weekly Shōnen Jump / Shōnen Jump+</td>
-              </tr>
-              <tr>
-                <th scope="row">Year</th>
-                <td><time datetime="2018">2018</time> – present</td>
-              </tr>
-              <tr>
-                <th scope="row">Genre</th>
-                <td>Dark Fantasy, Action, Horror</td>
-              </tr>
-            </tbody>
-          </table>
+        <!-- Right: Key Facts with modern cards -->
+        <aside class="about-facts reveal-right">
+          <div class="fact-card">
+            <span class="fact-label">Author</span>
+            <span class="fact-value">Tatsuki Fujimoto</span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Studio</span>
+            <span class="fact-value">MAPPA</span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Episodes</span>
+            <span class="fact-value"><span class="counter" data-target="12">0</span></span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Chapters</span>
+            <span class="fact-value"><span class="counter" data-target="180">0</span>+</span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Year</span>
+            <span class="fact-value"><time datetime="2018">2018</time> — present</span>
+          </div>
+          <div class="fact-card">
+            <span class="fact-label">Genre</span>
+            <span class="fact-value">Dark Fantasy / Action / Horror</span>
+          </div>
+          <div class="fact-card fact-card-accent">
+            <span class="fact-label">Serialization</span>
+            <span class="fact-value">Shōnen Jump+</span>
+          </div>
         </aside>
       </div>
     </div>
@@ -163,82 +233,174 @@
        ============================================================ -->
   <section id="characters" class="characters">
     <div class="section-container">
-      <h2 class="section-title">Characters</h2>
+      <h2 class="section-title reveal-up">
+        <span class="title-accent" aria-hidden="true">//</span>
+        Characters
+        <span class="title-accent" aria-hidden="true">//</span>
+      </h2>
 
       <div class="carousel-wrapper">
-        <button class="carousel-btn carousel-btn--left" aria-label="Scroll characters left">&#10094;</button>
+        <button class="carousel-btn carousel-btn--left chainsaw-nav-btn" aria-label="Scroll characters left">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
 
         <div class="carousel-track" role="list" aria-label="Character cards">
 
           <!-- Denji -->
-          <article class="character-card" role="listitem">
-            <figure class="card-image-wrapper">
-              <img src="https://via.placeholder.com/300x400/0a0a0a/cc0000?text=DENJI" alt="Denji — the Chainsaw Man" loading="lazy">
-              <figcaption class="card-name">Denji</figcaption>
-            </figure>
-            <div class="card-bio">
-              <p>A rough, simple-minded teenager who becomes the Chainsaw Man after merging with his devil dog Pochita. All he wants is to live a normal life — eat good food, find a girlfriend, and be happy.</p>
+          <article class="character-card tilt-card" role="listitem" data-color="#ff4444">
+            <div class="card-inner">
+              <div class="card-front">
+                <figure class="card-image-wrapper">
+                  <img src="https://placehold.co/300x420/0a0a0a/cc0000?text=DENJI&font=bebas-neue" alt="Denji — the Chainsaw Man" loading="lazy">
+                  <div class="card-overlay"></div>
+                  <figcaption class="card-name">Denji</figcaption>
+                  <span class="card-role">The Chainsaw Man</span>
+                </figure>
+              </div>
+              <div class="card-back">
+                <h3>Denji</h3>
+                <p>A rough, simple-minded teenager who becomes the Chainsaw Man after merging with his devil dog Pochita. All he wants is to live a normal life — eat good food, find a girlfriend, and be happy.</p>
+                <button class="flip-back-btn" aria-label="Flip card back">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+                  Back
+                </button>
+              </div>
             </div>
+            <button class="card-flip-btn" aria-label="Flip card to see bio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
           </article>
 
           <!-- Power -->
-          <article class="character-card" role="listitem">
-            <figure class="card-image-wrapper">
-              <img src="https://via.placeholder.com/300x400/0a0a0a/cc0000?text=POWER" alt="Power — the Blood Fiend" loading="lazy">
-              <figcaption class="card-name">Power</figcaption>
-            </figure>
-            <div class="card-bio">
-              <p>The Blood Fiend — a Devil inhabiting a human corpse. Chaotic, narcissistic, and fiercely loyal to her cat Meowy. She becomes one of Denji's closest companions despite her constant lying.</p>
+          <article class="character-card tilt-card" role="listitem" data-color="#ff6699">
+            <div class="card-inner">
+              <div class="card-front">
+                <figure class="card-image-wrapper">
+                  <img src="https://placehold.co/300x420/0a0a0a/ff6699?text=POWER&font=bebas-neue" alt="Power — the Blood Fiend" loading="lazy">
+                  <div class="card-overlay"></div>
+                  <figcaption class="card-name">Power</figcaption>
+                  <span class="card-role">Blood Fiend</span>
+                </figure>
+              </div>
+              <div class="card-back">
+                <h3>Power</h3>
+                <p>The Blood Fiend — a Devil inhabiting a human corpse. Chaotic, narcissistic, and fiercely loyal to her cat Meowy. She becomes one of Denji's closest companions despite her constant lying.</p>
+                <button class="flip-back-btn" aria-label="Flip card back">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+                  Back
+                </button>
+              </div>
             </div>
+            <button class="card-flip-btn" aria-label="Flip card to see bio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
           </article>
 
           <!-- Makima -->
-          <article class="character-card" role="listitem">
-            <figure class="card-image-wrapper">
-              <img src="https://via.placeholder.com/300x400/0a0a0a/cc0000?text=MAKIMA" alt="Makima — the Control Devil" loading="lazy">
-              <figcaption class="card-name">Makima</figcaption>
-            </figure>
-            <div class="card-bio">
-              <p>The mysterious head of Public Safety Division 4. Beautiful, calculating, and seemingly omniscient. Her true nature is far more terrifying than any Devil Denji has faced.</p>
+          <article class="character-card tilt-card" role="listitem" data-color="#ffaa00">
+            <div class="card-inner">
+              <div class="card-front">
+                <figure class="card-image-wrapper">
+                  <img src="https://placehold.co/300x420/0a0a0a/ffaa00?text=MAKIMA&font=bebas-neue" alt="Makima — the Control Devil" loading="lazy">
+                  <div class="card-overlay"></div>
+                  <figcaption class="card-name">Makima</figcaption>
+                  <span class="card-role">Control Devil</span>
+                </figure>
+              </div>
+              <div class="card-back">
+                <h3>Makima</h3>
+                <p>The mysterious head of Public Safety Division 4. Beautiful, calculating, and seemingly omniscient. Her true nature is far more terrifying than any Devil Denji has faced.</p>
+                <button class="flip-back-btn" aria-label="Flip card back">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+                  Back
+                </button>
+              </div>
             </div>
+            <button class="card-flip-btn" aria-label="Flip card to see bio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
           </article>
 
-          <!-- Aki Hayakawa -->
-          <article class="character-card" role="listitem">
-            <figure class="card-image-wrapper">
-              <img src="https://via.placeholder.com/300x400/0a0a0a/cc0000?text=AKI" alt="Aki Hayakawa — Devil Hunter" loading="lazy">
-              <figcaption class="card-name">Aki Hayakawa</figcaption>
-            </figure>
-            <div class="card-bio">
-              <p>A stoic, revenge-driven Devil Hunter who contracts with the Curse and Future Devils. Initially cold toward Denji, he becomes a reluctant older-brother figure — with a tragic fate awaiting him.</p>
+          <!-- Aki -->
+          <article class="character-card tilt-card" role="listitem" data-color="#4488ff">
+            <div class="card-inner">
+              <div class="card-front">
+                <figure class="card-image-wrapper">
+                  <img src="https://placehold.co/300x420/0a0a0a/4488ff?text=AKI&font=bebas-neue" alt="Aki Hayakawa — Devil Hunter" loading="lazy">
+                  <div class="card-overlay"></div>
+                  <figcaption class="card-name">Aki Hayakawa</figcaption>
+                  <span class="card-role">Devil Hunter</span>
+                </figure>
+              </div>
+              <div class="card-back">
+                <h3>Aki Hayakawa</h3>
+                <p>A stoic, revenge-driven Devil Hunter who contracts with the Curse and Future Devils. Initially cold toward Denji, he becomes a reluctant older-brother figure — with a tragic fate awaiting him.</p>
+                <button class="flip-back-btn" aria-label="Flip card back">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+                  Back
+                </button>
+              </div>
             </div>
+            <button class="card-flip-btn" aria-label="Flip card to see bio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
           </article>
 
           <!-- Reze -->
-          <article class="character-card" role="listitem">
-            <figure class="card-image-wrapper">
-              <img src="https://via.placeholder.com/300x400/0a0a0a/cc0000?text=REZE" alt="Reze — the Bomb Devil hybrid" loading="lazy">
-              <figcaption class="card-name">Reze</figcaption>
-            </figure>
-            <div class="card-bio">
-              <p>A mysterious girl who works at a café and shows interest in Denji. She is actually a Soviet weapon — the Bomb Devil hybrid — sent to capture Denji's heart, literally and figuratively.</p>
+          <article class="character-card tilt-card" role="listitem" data-color="#ff5500">
+            <div class="card-inner">
+              <div class="card-front">
+                <figure class="card-image-wrapper">
+                  <img src="https://placehold.co/300x420/0a0a0a/ff5500?text=REZE&font=bebas-neue" alt="Reze — the Bomb Devil hybrid" loading="lazy">
+                  <div class="card-overlay"></div>
+                  <figcaption class="card-name">Reze</figcaption>
+                  <span class="card-role">Bomb Devil</span>
+                </figure>
+              </div>
+              <div class="card-back">
+                <h3>Reze</h3>
+                <p>A mysterious girl who works at a cafe and shows interest in Denji. She is actually a Soviet weapon — the Bomb Devil hybrid — sent to capture Denji's heart, literally and figuratively.</p>
+                <button class="flip-back-btn" aria-label="Flip card back">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+                  Back
+                </button>
+              </div>
             </div>
+            <button class="card-flip-btn" aria-label="Flip card to see bio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
           </article>
 
           <!-- Himeno -->
-          <article class="character-card" role="listitem">
-            <figure class="card-image-wrapper">
-              <img src="https://via.placeholder.com/300x400/0a0a0a/cc0000?text=HIMENO" alt="Himeno — veteran Devil Hunter" loading="lazy">
-              <figcaption class="card-name">Himeno</figcaption>
-            </figure>
-            <div class="card-bio">
-              <p>Aki's partner and a veteran Devil Hunter who has lost many partners before him. She contracts with the Ghost Devil and carries the heavy emotional toll of the profession with dark humor.</p>
+          <article class="character-card tilt-card" role="listitem" data-color="#88cc44">
+            <div class="card-inner">
+              <div class="card-front">
+                <figure class="card-image-wrapper">
+                  <img src="https://placehold.co/300x420/0a0a0a/88cc44?text=HIMENO&font=bebas-neue" alt="Himeno — veteran Devil Hunter" loading="lazy">
+                  <div class="card-overlay"></div>
+                  <figcaption class="card-name">Himeno</figcaption>
+                  <span class="card-role">Ghost Devil Hunter</span>
+                </figure>
+              </div>
+              <div class="card-back">
+                <h3>Himeno</h3>
+                <p>Aki's partner and a veteran Devil Hunter who has lost many partners before him. She contracts with the Ghost Devil and carries the heavy emotional toll of the profession with dark humor.</p>
+                <button class="flip-back-btn" aria-label="Flip card back">
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
+                  Back
+                </button>
+              </div>
             </div>
+            <button class="card-flip-btn" aria-label="Flip card to see bio">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            </button>
           </article>
 
         </div>
 
-        <button class="carousel-btn carousel-btn--right" aria-label="Scroll characters right">&#10095;</button>
+        <button class="carousel-btn carousel-btn--right chainsaw-nav-btn" aria-label="Scroll characters right">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </div>
   </section>
@@ -248,53 +410,92 @@
        ============================================================ -->
   <section id="devils" class="devils">
     <div class="section-container">
-      <h2 class="section-title">Devils Gallery</h2>
-      <p class="section-subtitle">PUBLIC SAFETY THREAT DOSSIER — CLASSIFIED</p>
+      <h2 class="section-title reveal-up">
+        <span class="title-accent" aria-hidden="true">//</span>
+        Devils Gallery
+        <span class="title-accent" aria-hidden="true">//</span>
+      </h2>
+      <p class="section-subtitle reveal-up">PUBLIC SAFETY THREAT DOSSIER — CLASSIFIED</p>
 
       <div class="devils-grid">
 
         <!-- Gun Devil -->
-        <article class="devil-card">
+        <article class="devil-card reveal-up" data-delay="0">
           <div class="devil-card-inner">
+            <div class="devil-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#cc0000" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="30" text-anchor="middle" fill="#cc0000" font-size="20">&#9760;</text></svg>
+            </div>
             <h3 class="devil-name">Gun Devil</h3>
             <span class="threat-badge threat-catastrophic">CATASTROPHIC</span>
             <p class="devil-desc">Killed 1.2 million people in five minutes. The most feared Devil in history, born from humanity's fear of firearms.</p>
+            <div class="devil-stats">
+              <div class="stat"><span class="stat-label">Fear Index</span><div class="stat-bar"><div class="stat-fill" data-width="98"></div></div></div>
+              <div class="stat"><span class="stat-label">Danger</span><div class="stat-bar"><div class="stat-fill" data-width="100"></div></div></div>
+            </div>
           </div>
         </article>
 
         <!-- Bat Devil -->
-        <article class="devil-card">
+        <article class="devil-card reveal-up" data-delay="100">
           <div class="devil-card-inner">
+            <div class="devil-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#ff6600" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="30" text-anchor="middle" fill="#ff6600" font-size="20">&#9760;</text></svg>
+            </div>
             <h3 class="devil-name">Bat Devil</h3>
             <span class="threat-badge threat-high">HIGH</span>
             <p class="devil-desc">A grotesque bat-like creature that feeds on human blood. One of the first major Devils Denji confronts as Chainsaw Man.</p>
+            <div class="devil-stats">
+              <div class="stat"><span class="stat-label">Fear Index</span><div class="stat-bar"><div class="stat-fill" data-width="55"></div></div></div>
+              <div class="stat"><span class="stat-label">Danger</span><div class="stat-bar"><div class="stat-fill" data-width="65"></div></div></div>
+            </div>
           </div>
         </article>
 
         <!-- Leech Devil -->
-        <article class="devil-card">
+        <article class="devil-card reveal-up" data-delay="200">
           <div class="devil-card-inner">
+            <div class="devil-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#ccaa00" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="30" text-anchor="middle" fill="#ccaa00" font-size="20">&#9760;</text></svg>
+            </div>
             <h3 class="devil-name">Leech Devil</h3>
             <span class="threat-badge threat-moderate">MODERATE</span>
             <p class="devil-desc">Lover of the Bat Devil. A parasitic Devil with a monstrous form and an unsettling devotion to her partner.</p>
+            <div class="devil-stats">
+              <div class="stat"><span class="stat-label">Fear Index</span><div class="stat-bar"><div class="stat-fill" data-width="35"></div></div></div>
+              <div class="stat"><span class="stat-label">Danger</span><div class="stat-bar"><div class="stat-fill" data-width="45"></div></div></div>
+            </div>
           </div>
         </article>
 
         <!-- Katana Man -->
-        <article class="devil-card">
+        <article class="devil-card reveal-up" data-delay="300">
           <div class="devil-card-inner">
+            <div class="devil-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#ff6600" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="30" text-anchor="middle" fill="#ff6600" font-size="20">&#9760;</text></svg>
+            </div>
             <h3 class="devil-name">Katana Man</h3>
             <span class="threat-badge threat-high">HIGH</span>
             <p class="devil-desc">A Devil-human hybrid like Denji. Grandson of a yakuza boss, he seeks revenge and wields deadly katana blades from his arms.</p>
+            <div class="devil-stats">
+              <div class="stat"><span class="stat-label">Fear Index</span><div class="stat-bar"><div class="stat-fill" data-width="60"></div></div></div>
+              <div class="stat"><span class="stat-label">Danger</span><div class="stat-bar"><div class="stat-fill" data-width="75"></div></div></div>
+            </div>
           </div>
         </article>
 
         <!-- Darkness Devil -->
-        <article class="devil-card">
+        <article class="devil-card reveal-up" data-delay="400">
           <div class="devil-card-inner">
+            <div class="devil-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#cc0000" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="30" text-anchor="middle" fill="#cc0000" font-size="20">&#9760;</text></svg>
+            </div>
             <h3 class="devil-name">Darkness Devil</h3>
             <span class="threat-badge threat-catastrophic">CATASTROPHIC</span>
             <p class="devil-desc">A Primal Fear — a Devil that has never experienced death. Its mere presence induces paralysis and existential terror.</p>
+            <div class="devil-stats">
+              <div class="stat"><span class="stat-label">Fear Index</span><div class="stat-bar"><div class="stat-fill" data-width="100"></div></div></div>
+              <div class="stat"><span class="stat-label">Danger</span><div class="stat-bar"><div class="stat-fill" data-width="100"></div></div></div>
+            </div>
           </div>
         </article>
 
@@ -307,58 +508,60 @@
        ============================================================ -->
   <section id="arcs" class="arcs">
     <div class="section-container">
-      <h2 class="section-title">Story Arcs</h2>
+      <h2 class="section-title reveal-up">
+        <span class="title-accent" aria-hidden="true">//</span>
+        Story Arcs
+        <span class="title-accent" aria-hidden="true">//</span>
+      </h2>
 
       <div class="timeline">
-
-        <!-- Bat Devil Arc -->
         <article class="timeline-item timeline-left">
           <div class="timeline-content">
+            <span class="arc-number" aria-hidden="true">01</span>
             <h3>Bat Devil Arc</h3>
             <p>Denji's first mission as Chainsaw Man pits him against the Bat Devil, who has kidnapped Power's beloved cat Meowy. A brutal baptism into the world of Devil Hunting.</p>
           </div>
         </article>
 
-        <!-- Eternity Devil Arc -->
         <article class="timeline-item timeline-right">
           <div class="timeline-content">
+            <span class="arc-number" aria-hidden="true">02</span>
             <h3>Eternity Devil Arc</h3>
             <p>Trapped in an infinite hotel loop by the Eternity Devil, Denji must fight for three straight days in one of the manga's most claustrophobic and relentless sequences.</p>
           </div>
         </article>
 
-        <!-- Katana Man Arc -->
         <article class="timeline-item timeline-left">
           <div class="timeline-content">
+            <span class="arc-number" aria-hidden="true">03</span>
             <h3>Katana Man Arc</h3>
             <p>A devastating ambush by the Katana Man and Akane Sawatari decimates Public Safety. Denji and Aki seek revenge in a story that reveals the true cost of the Devil Hunter profession.</p>
           </div>
         </article>
 
-        <!-- Bomb Girl Arc -->
         <article class="timeline-item timeline-right">
           <div class="timeline-content">
+            <span class="arc-number" aria-hidden="true">04</span>
             <h3>Bomb Girl Arc</h3>
             <p>Denji falls for Reze, a girl who seems too good to be true — because she is. Their doomed romance and explosive battles form the series' most bittersweet arc.</p>
           </div>
         </article>
 
-        <!-- International Assassins Arc -->
         <article class="timeline-item timeline-left">
           <div class="timeline-content">
+            <span class="arc-number" aria-hidden="true">05</span>
             <h3>International Assassins Arc</h3>
             <p>Assassins from around the world descend on Japan to claim the Chainsaw Man's heart. Features the terrifying Darkness Devil and a journey into Hell itself.</p>
           </div>
         </article>
 
-        <!-- Control Devil Arc -->
         <article class="timeline-item timeline-right">
           <div class="timeline-content">
+            <span class="arc-number" aria-hidden="true">06</span>
             <h3>Control Devil Arc</h3>
             <p>The shattering finale of Part 1. Makima's true identity and motives are revealed, leading to a heartbreaking climax that redefines everything that came before.</p>
           </div>
         </article>
-
       </div>
     </div>
   </section>
@@ -369,21 +572,33 @@
   <section id="themes" class="themes">
     <div class="section-container">
       <article class="themes-editorial">
-        <h2 class="section-title">Themes &amp; Legacy</h2>
+        <h2 class="section-title reveal-up">
+          <span class="title-accent" aria-hidden="true">//</span>
+          Themes &amp; Legacy
+          <span class="title-accent" aria-hidden="true">//</span>
+        </h2>
 
-        <p class="drop-cap">Chainsaw Man is, at its core, a story about desire — and what happens when getting what you want costs you everything you are. Tatsuki Fujimoto strips the shonen genre down to its bleeding bones, replacing power fantasies with a protagonist who just wants to eat toast with jam and touch a girl. Denji's simplicity isn't played for laughs; it's the series' most radical statement. In a genre built on ambition, Chainsaw Man asks: what if the hero's dreams are small, human, and heartbreakingly ordinary?</p>
+        <p class="drop-cap reveal-up">Chainsaw Man is, at its core, a story about desire — and what happens when getting what you want costs you everything you are. Tatsuki Fujimoto strips the shonen genre down to its bleeding bones, replacing power fantasies with a protagonist who just wants to eat toast with jam and touch a girl. Denji's simplicity isn't played for laughs; it's the series' most radical statement. In a genre built on ambition, Chainsaw Man asks: what if the hero's dreams are small, human, and heartbreakingly ordinary?</p>
 
-        <h3>The Commodification of Fear</h3>
-        <p>Devils in Chainsaw Man grow stronger when humans fear the concept they embody. The Gun Devil — an apocalyptic force of nature — is a direct commentary on how media amplifies fear, and how that fear becomes a resource to be weaponized by governments and institutions. Fear is currency. Devils are the inflation.</p>
+        <div class="theme-card reveal-left">
+          <h3>The Commodification of Fear</h3>
+          <p>Devils in Chainsaw Man grow stronger when humans fear the concept they embody. The Gun Devil — an apocalyptic force of nature — is a direct commentary on how media amplifies fear, and how that fear becomes a resource to be weaponized by governments and institutions. Fear is currency. Devils are the inflation.</p>
+        </div>
 
-        <h3>Desire as Self-Destruction</h3>
-        <p>Every contract in this world demands a price. Aki sacrifices years of his lifespan; Himeno gives her right eye; Denji gives his heart — literally. Fujimoto draws a direct line between wanting something and losing a piece of yourself to get it. The series suggests that the most dangerous Devil isn't fear — it's longing.</p>
+        <div class="theme-card reveal-right">
+          <h3>Desire as Self-Destruction</h3>
+          <p>Every contract in this world demands a price. Aki sacrifices years of his lifespan; Himeno gives her right eye; Denji gives his heart — literally. Fujimoto draws a direct line between wanting something and losing a piece of yourself to get it. The series suggests that the most dangerous Devil isn't fear — it's longing.</p>
+        </div>
 
-        <h3>The Cost of Power</h3>
-        <p>Makima embodies control disguised as care. She offers Denji everything he wants — food, shelter, affection — in exchange for obedience. It's a parable about abusive power structures that resonates far beyond manga: how easily people surrender autonomy for comfort, and how institutions exploit the desperate.</p>
+        <div class="theme-card reveal-left">
+          <h3>The Cost of Power</h3>
+          <p>Makima embodies control disguised as care. She offers Denji everything he wants — food, shelter, affection — in exchange for obedience. It's a parable about abusive power structures that resonates far beyond manga: how easily people surrender autonomy for comfort, and how institutions exploit the desperate.</p>
+        </div>
 
-        <h3>Postmodern Shonen</h3>
-        <p>Fujimoto is a cinephile and it shows. Chainsaw Man is packed with references to Tarantino, Lynch, and particularly the Texas Chain Saw Massacre. But beyond homage, Fujimoto deconstructs shonen tropes with surgical precision. The training arcs are replaced by trauma. The power-ups come with amputations. The final battle isn't won through friendship — it's won through a deeply unsettling act of consumption. Chainsaw Man doesn't subvert expectations; it chainsaws through them.</p>
+        <div class="theme-card reveal-right">
+          <h3>Postmodern Shonen</h3>
+          <p>Fujimoto is a cinephile and it shows. Chainsaw Man is packed with references to Tarantino, Lynch, and particularly the Texas Chain Saw Massacre. But beyond homage, Fujimoto deconstructs shonen tropes with surgical precision. The training arcs are replaced by trauma. The power-ups come with amputations. The final battle isn't won through friendship — it's won through a deeply unsettling act of consumption. Chainsaw Man doesn't subvert expectations; it chainsaws through them.</p>
+        </div>
       </article>
     </div>
   </section>
@@ -392,28 +607,23 @@
        SECTION 7: FOOTER
        ============================================================ -->
   <footer class="footer">
+    <div class="footer-chainsaw-border" aria-hidden="true"></div>
     <div class="section-container">
+      <div class="footer-logo" aria-hidden="true">
+        <span class="logo-chain">CHAIN</span><span class="logo-saw">SAW</span><span class="logo-man">MAN</span>
+      </div>
       <p class="footer-credits"><em>Chainsaw Man</em> created by <strong>Tatsuki Fujimoto</strong>. Published by Shueisha. Animated by MAPPA.</p>
       <p class="footer-disclaimer">This is an unofficial fan site. All rights belong to their respective owners.</p>
 
       <div class="footer-socials" aria-label="Social media links">
-        <!-- Twitter/X -->
         <a href="#" aria-label="Twitter" class="social-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
         </a>
-        <!-- Reddit -->
         <a href="#" aria-label="Reddit" class="social-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 13.98c.04.248.06.5.06.756 0 3.866-4.502 7-10.052 7C2.524 21.736 0 18.602 0 14.736c0-.256.02-.508.06-.756A1.99 1.99 0 0 1 1 12c0-.53.212-1.04.586-1.414A1.99 1.99 0 0 1 3 10c.47 0 .908.164 1.252.45A11.476 11.476 0 0 1 9.6 8.8l1.2-5.6 3.88.82a1.6 1.6 0 1 1-.16.78L11.2 4l-1.04 4.86c2.34.12 4.47.96 5.96 2.36A1.99 1.99 0 0 1 21 12c0 .768-.44 1.47-1.134 1.81zM8.4 13.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm7.2 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm-6.92 3.6c1.04 1.04 3.4 1.12 3.52 1.12s2.48-.08 3.52-1.12a.32.32 0 0 0-.44-.44c-.88.88-2.64 1.04-3.08 1.04s-2.2-.16-3.08-1.04a.32.32 0 0 0-.44.44z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 13.98c.04.248.06.5.06.756 0 3.866-4.502 7-10.052 7C2.524 21.736 0 18.602 0 14.736c0-.256.02-.508.06-.756A1.99 1.99 0 0 1 1 12c0-.53.212-1.04.586-1.414A1.99 1.99 0 0 1 3 10c.47 0 .908.164 1.252.45A11.476 11.476 0 0 1 9.6 8.8l1.2-5.6 3.88.82a1.6 1.6 0 1 1-.16.78L11.2 4l-1.04 4.86c2.34.12 4.47.96 5.96 2.36A1.99 1.99 0 0 1 21 12c0 .768-.44 1.47-1.134 1.81zM8.4 13.2a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm7.2 0a1.2 1.2 0 1 0 0 2.4 1.2 1.2 0 0 0 0-2.4zm-6.92 3.6c1.04 1.04 3.4 1.12 3.52 1.12s2.48-.08 3.52-1.12a.32.32 0 0 0-.44-.44c-.88.88-2.64 1.04-3.08 1.04s-2.2-.16-3.08-1.04a.32.32 0 0 0-.44.44z"/></svg>
         </a>
-        <!-- MyAnimeList -->
         <a href="#" aria-label="MyAnimeList" class="social-icon">
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-            <path d="M2 2h20v20H2V2zm2 2v16h16V4H4zm3 4h2v8H7V8zm4 0h2l2 4 2-4h2v8h-2v-5l-2 4-2-4v5H11V8z"/>
-          </svg>
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M2 2h20v20H2V2zm2 2v16h16V4H4zm3 4h2v8H7V8zm4 0h2l2 4 2-4h2v8h-2v-5l-2 4-2-4v5H11V8z"/></svg>
         </a>
       </div>
 
@@ -421,7 +631,6 @@
     </div>
   </footer>
 
-  <!-- Main Script -->
   <script src="script.js"></script>
 </body>
 </html>
