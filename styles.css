@@ -765,212 +765,108 @@ body.cursor-hover .cursor-ring {
   position: relative;
 }
 
-.carousel-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
-}
 
-.carousel-track {
-  display: flex;
+/* Characters grid — same style as devils */
+.characters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: var(--space-md);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-  padding: var(--space-lg) var(--space-sm);
-  scrollbar-width: none;
 }
 
-.carousel-track::-webkit-scrollbar { display: none; }
-
-/* Carousel navigation buttons — chainsaw styled */
-.chainsaw-nav-btn {
-  flex-shrink: 0;
-  width: 50px; height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--clr-grey-800);
-  border: 2px solid var(--clr-red);
-  color: var(--clr-red);
-  border-radius: 50%;
-  transition: all var(--transition-base);
-  z-index: 2;
-}
-
-.chainsaw-nav-btn:hover {
-  background: var(--clr-red);
-  color: var(--clr-black);
-  box-shadow: 0 0 20px var(--clr-red-glow);
-  transform: scale(1.1);
-}
-
-.chainsaw-nav-btn:active {
-  transform: scale(0.95);
-}
-
-/* Character cards — 3D flip */
 .character-card {
-  flex: 0 0 420px;
-  height: 580px;
-  scroll-snap-align: center;
-  perspective: 1000px;
-  position: relative;
-}
-
-.card-inner {
-  width: 100%; height: 100%;
-  position: relative;
-  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  transform-style: preserve-3d;
-}
-
-.character-card.flipped .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-  position: absolute;
-  inset: 0;
-  backface-visibility: hidden;
+  background: var(--clr-grey-800);
+  border: 1px solid var(--clr-grey-700);
   border-radius: var(--border-radius-lg);
   overflow: hidden;
+  transition: all var(--transition-slow);
+  position: relative;
 }
 
-.card-front {
-  background: var(--clr-grey-700);
-}
-
-.card-back {
-  background: var(--clr-grey-800);
-  border: 2px solid var(--clr-red);
-  transform: rotateY(180deg);
-  padding: var(--space-md);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.character-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   border-radius: var(--border-radius-lg);
+  background: linear-gradient(135deg, rgba(204,0,0,0.05) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity var(--transition-base);
 }
 
-.card-back h3 {
-  font-family: var(--ff-heading);
-  font-size: 2rem;
-  color: var(--clr-red);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.character-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--clr-red-dark);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px var(--clr-red-dark);
+}
+
+.character-card:hover::before { opacity: 1; }
+
+.character-card-inner {
+  padding: var(--space-md);
+  position: relative;
+  z-index: 1;
+}
+
+.character-icon {
   margin-bottom: var(--space-sm);
 }
 
-.card-back p {
+.character-name {
+  font-family: var(--ff-heading);
+  font-size: 1.6rem;
+  color: var(--clr-offwhite);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-xs);
+}
+
+.role-badge {
+  display: inline-block;
+  font-family: var(--ff-tech);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  padding: 0.35em 0.9em;
+  border-radius: 3px;
+  margin-bottom: var(--space-sm);
+  text-transform: uppercase;
+  border: 1px solid;
+}
+
+.role-protagonist {
+  color: var(--clr-red);
+  border-color: var(--clr-red);
+  background: rgba(204,0,0,0.1);
+  box-shadow: 0 0 10px rgba(204,0,0,0.2);
+}
+
+.role-fiend {
+  color: #ff6699;
+  border-color: #ff6699;
+  background: rgba(255,102,153,0.08);
+}
+
+.role-devil {
+  color: var(--clr-orange);
+  border-color: var(--clr-orange);
+  background: rgba(255,102,0,0.08);
+}
+
+.role-hunter {
+  color: #4488ff;
+  border-color: #4488ff;
+  background: rgba(68,136,255,0.08);
+}
+
+.character-desc {
   color: var(--clr-text);
   font-size: var(--fs-small);
   line-height: 1.7;
-  margin-bottom: var(--space-md);
+  margin-bottom: var(--space-sm);
 }
 
-.flip-back-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  align-self: flex-start;
-  background: none;
-  border: 1px solid var(--clr-grey-500);
-  color: var(--clr-text);
-  font-family: var(--ff-body);
-  font-size: var(--fs-small);
-  padding: 6px 14px;
-  border-radius: 4px;
-  transition: all var(--transition-fast);
-}
-
-.flip-back-btn:hover {
-  border-color: var(--clr-red);
-  color: var(--clr-red);
-}
-
-.card-image-wrapper {
-  position: relative;
-  width: 100%; height: 100%;
-  overflow: hidden;
-}
-
-.card-image-wrapper img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.character-card:hover .card-image-wrapper img {
-  transform: scale(1.08);
-}
-
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(0deg, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.2) 40%, transparent 60%);
-}
-
-.card-name {
-  position: absolute;
-  bottom: 40px; left: var(--space-sm); right: var(--space-sm);
-  font-family: var(--ff-heading);
-  font-size: 2rem;
-  color: var(--clr-offwhite);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  z-index: 2;
-}
-
-.card-role {
-  position: absolute;
-  bottom: 20px; left: var(--space-sm);
-  font-family: var(--ff-tech);
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  color: var(--clr-red);
-  text-transform: uppercase;
-  z-index: 2;
-}
-
-/* Flip button */
-.card-flip-btn {
-  position: absolute;
-  top: 12px; right: 12px;
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: rgba(10,10,10,0.7);
-  border: 1px solid rgba(204,0,0,0.3);
-  color: var(--clr-red);
+.character-stats {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 3;
-  transition: all var(--transition-fast);
-  backdrop-filter: blur(8px);
-}
-
-.card-flip-btn:hover {
-  background: var(--clr-red);
-  color: var(--clr-black);
-  border-color: var(--clr-red);
-}
-
-/* Card tilt glow (set via JS) */
-.character-card::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  border-radius: var(--border-radius-lg);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.character-card:hover::after {
-  opacity: 1;
-  box-shadow: 0 20px 60px rgba(204,0,0,0.3);
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* ============================================================
@@ -1490,14 +1386,7 @@ body.cursor-hover .cursor-ring {
 
   .about-grid { grid-template-columns: 1fr; }
 
-  .carousel-wrapper { flex-direction: column; }
-  .carousel-track {
-    flex-direction: column;
-    align-items: center;
-    overflow-x: visible;
-  }
-  .character-card { flex: 0 0 auto; width: 90%; max-width: 320px; }
-  .chainsaw-nav-btn { display: none; }
+  .characters-grid { grid-template-columns: 1fr; }
 
   .timeline::before { left: 20px; }
   .timeline-item {

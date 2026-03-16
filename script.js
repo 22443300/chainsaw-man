@@ -218,90 +218,9 @@
       });
     }, { threshold: 0.3 });
 
-    document.querySelectorAll('.devil-card').forEach(function (card) {
+    document.querySelectorAll('.devil-card, .character-card').forEach(function (card) {
       statObserver.observe(card);
     });
-  }
-
-  /* ============================================================
-     CHARACTER CARD — 3D flip on button click
-     ============================================================ */
-  document.querySelectorAll('.character-card').forEach(function (card) {
-    var flipBtn = card.querySelector('.card-flip-btn');
-    var backBtn = card.querySelector('.flip-back-btn');
-
-    if (flipBtn) {
-      flipBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        card.classList.add('flipped');
-      });
-    }
-
-    if (backBtn) {
-      backBtn.addEventListener('click', function (e) {
-        e.stopPropagation();
-        card.classList.remove('flipped');
-      });
-    }
-  });
-
-  /* ============================================================
-     CHARACTER CARD — 3D tilt effect on hover
-     ============================================================ */
-  if (window.matchMedia('(pointer: fine)').matches) {
-    document.querySelectorAll('.tilt-card').forEach(function (card) {
-      card.addEventListener('mousemove', function (e) {
-        if (card.classList.contains('flipped')) return;
-        var rect = card.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
-        var centerX = rect.width / 2;
-        var centerY = rect.height / 2;
-        var rotateY = ((x - centerX) / centerX) * 8;
-        var rotateX = ((centerY - y) / centerY) * 8;
-        card.querySelector('.card-inner').style.transform =
-          'rotateY(' + rotateY + 'deg) rotateX(' + rotateX + 'deg)';
-      });
-
-      card.addEventListener('mouseleave', function () {
-        card.querySelector('.card-inner').style.transform = '';
-      });
-    });
-  }
-
-  /* ============================================================
-     CHARACTER CAROUSEL — arrows + swipe
-     ============================================================ */
-  var carouselTrack = document.querySelector('.carousel-track');
-  var btnLeft = document.querySelector('.carousel-btn--left');
-  var btnRight = document.querySelector('.carousel-btn--right');
-
-  if (carouselTrack) {
-    var scrollAmt = 320;
-
-    if (btnLeft) {
-      btnLeft.addEventListener('click', function () {
-        carouselTrack.scrollBy({ left: -scrollAmt, behavior: 'smooth' });
-      });
-    }
-    if (btnRight) {
-      btnRight.addEventListener('click', function () {
-        carouselTrack.scrollBy({ left: scrollAmt, behavior: 'smooth' });
-      });
-    }
-
-    // Touch/swipe
-    var touchStartX = 0;
-    carouselTrack.addEventListener('touchstart', function (e) {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    carouselTrack.addEventListener('touchend', function (e) {
-      var diff = touchStartX - e.changedTouches[0].screenX;
-      if (Math.abs(diff) > 50) {
-        carouselTrack.scrollBy({ left: diff > 0 ? scrollAmt : -scrollAmt, behavior: 'smooth' });
-      }
-    }, { passive: true });
   }
 
   /* ============================================================
@@ -345,18 +264,6 @@
 
     btn.addEventListener('mouseleave', function () {
       btn.classList.remove('revving');
-    });
-  });
-
-  /* ============================================================
-     CHAINSAW NAV BUTTONS — vibrate on click
-     ============================================================ */
-  document.querySelectorAll('.chainsaw-nav-btn').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      btn.style.animation = 'btnRevVibrate 0.06s infinite alternate';
-      setTimeout(function () {
-        btn.style.animation = '';
-      }, 400);
     });
   });
 
@@ -405,7 +312,7 @@
      DEVIL CARDS — interactive up/down movement on click
      Cards bounce up when clicked, click again to drop back
      ============================================================ */
-  document.querySelectorAll('.devil-card').forEach(function (card) {
+  document.querySelectorAll('.devil-card, .character-card').forEach(function (card) {
     var lifted = false;
     card.addEventListener('click', function () {
       if (!lifted) {

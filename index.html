@@ -239,168 +239,104 @@
         <span class="title-accent" aria-hidden="true">//</span>
       </h2>
 
-      <div class="carousel-wrapper">
-        <button class="carousel-btn carousel-btn--left chainsaw-nav-btn" aria-label="Scroll characters left">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
+      <div class="characters-grid">
 
-        <div class="carousel-track" role="list" aria-label="Character cards">
-
-          <!-- Denji -->
-          <article class="character-card tilt-card" role="listitem" data-color="#ff4444">
-            <div class="card-inner">
-              <div class="card-front">
-                <figure class="card-image-wrapper">
-                  <img src="https://placehold.co/300x420/0a0a0a/cc0000?text=DENJI&font=bebas-neue" alt="Denji — the Chainsaw Man" loading="lazy">
-                  <div class="card-overlay"></div>
-                  <figcaption class="card-name">Denji</figcaption>
-                  <span class="card-role">The Chainsaw Man</span>
-                </figure>
-              </div>
-              <div class="card-back">
-                <h3>Denji</h3>
-                <p>A rough, simple-minded teenager who becomes the Chainsaw Man after merging with his devil dog Pochita. All he wants is to live a normal life — eat good food, find a girlfriend, and be happy.</p>
-                <button class="flip-back-btn" aria-label="Flip card back">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-                  Back
-                </button>
-              </div>
+        <!-- Denji -->
+        <article class="character-card reveal-up" data-delay="0">
+          <div class="character-card-inner">
+            <div class="character-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#cc0000" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="31" text-anchor="middle" fill="#cc0000" font-size="18">&#9876;</text></svg>
             </div>
-            <button class="card-flip-btn" aria-label="Flip card to see bio">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </article>
-
-          <!-- Power -->
-          <article class="character-card tilt-card" role="listitem" data-color="#ff6699">
-            <div class="card-inner">
-              <div class="card-front">
-                <figure class="card-image-wrapper">
-                  <img src="https://placehold.co/300x420/0a0a0a/ff6699?text=POWER&font=bebas-neue" alt="Power — the Blood Fiend" loading="lazy">
-                  <div class="card-overlay"></div>
-                  <figcaption class="card-name">Power</figcaption>
-                  <span class="card-role">Blood Fiend</span>
-                </figure>
-              </div>
-              <div class="card-back">
-                <h3>Power</h3>
-                <p>The Blood Fiend — a Devil inhabiting a human corpse. Chaotic, narcissistic, and fiercely loyal to her cat Meowy. She becomes one of Denji's closest companions despite her constant lying.</p>
-                <button class="flip-back-btn" aria-label="Flip card back">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-                  Back
-                </button>
-              </div>
+            <h3 class="character-name">Denji</h3>
+            <span class="role-badge role-protagonist">THE CHAINSAW MAN</span>
+            <p class="character-desc">A rough, simple-minded teenager who becomes the Chainsaw Man after merging with his devil dog Pochita. All he wants is to live a normal life — eat good food, find a girlfriend, and be happy.</p>
+            <div class="character-stats">
+              <div class="stat"><span class="stat-label">Power</span><div class="stat-bar"><div class="stat-fill" data-width="90"></div></div></div>
+              <div class="stat"><span class="stat-label">Will</span><div class="stat-bar"><div class="stat-fill" data-width="95"></div></div></div>
             </div>
-            <button class="card-flip-btn" aria-label="Flip card to see bio">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </article>
+          </div>
+        </article>
 
-          <!-- Makima -->
-          <article class="character-card tilt-card" role="listitem" data-color="#ffaa00">
-            <div class="card-inner">
-              <div class="card-front">
-                <figure class="card-image-wrapper">
-                  <img src="https://placehold.co/300x420/0a0a0a/ffaa00?text=MAKIMA&font=bebas-neue" alt="Makima — the Control Devil" loading="lazy">
-                  <div class="card-overlay"></div>
-                  <figcaption class="card-name">Makima</figcaption>
-                  <span class="card-role">Control Devil</span>
-                </figure>
-              </div>
-              <div class="card-back">
-                <h3>Makima</h3>
-                <p>The mysterious head of Public Safety Division 4. Beautiful, calculating, and seemingly omniscient. Her true nature is far more terrifying than any Devil Denji has faced.</p>
-                <button class="flip-back-btn" aria-label="Flip card back">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-                  Back
-                </button>
-              </div>
+        <!-- Power -->
+        <article class="character-card reveal-up" data-delay="100">
+          <div class="character-card-inner">
+            <div class="character-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#ff6699" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="31" text-anchor="middle" fill="#ff6699" font-size="18">&#9876;</text></svg>
             </div>
-            <button class="card-flip-btn" aria-label="Flip card to see bio">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </article>
-
-          <!-- Aki -->
-          <article class="character-card tilt-card" role="listitem" data-color="#4488ff">
-            <div class="card-inner">
-              <div class="card-front">
-                <figure class="card-image-wrapper">
-                  <img src="https://placehold.co/300x420/0a0a0a/4488ff?text=AKI&font=bebas-neue" alt="Aki Hayakawa — Devil Hunter" loading="lazy">
-                  <div class="card-overlay"></div>
-                  <figcaption class="card-name">Aki Hayakawa</figcaption>
-                  <span class="card-role">Devil Hunter</span>
-                </figure>
-              </div>
-              <div class="card-back">
-                <h3>Aki Hayakawa</h3>
-                <p>A stoic, revenge-driven Devil Hunter who contracts with the Curse and Future Devils. Initially cold toward Denji, he becomes a reluctant older-brother figure — with a tragic fate awaiting him.</p>
-                <button class="flip-back-btn" aria-label="Flip card back">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-                  Back
-                </button>
-              </div>
+            <h3 class="character-name">Power</h3>
+            <span class="role-badge role-fiend">BLOOD FIEND</span>
+            <p class="character-desc">The Blood Fiend — a Devil inhabiting a human corpse. Chaotic, narcissistic, and fiercely loyal to her cat Meowy. She becomes one of Denji's closest companions despite her constant lying.</p>
+            <div class="character-stats">
+              <div class="stat"><span class="stat-label">Power</span><div class="stat-bar"><div class="stat-fill" data-width="75"></div></div></div>
+              <div class="stat"><span class="stat-label">Chaos</span><div class="stat-bar"><div class="stat-fill" data-width="100"></div></div></div>
             </div>
-            <button class="card-flip-btn" aria-label="Flip card to see bio">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </article>
+          </div>
+        </article>
 
-          <!-- Reze -->
-          <article class="character-card tilt-card" role="listitem" data-color="#ff5500">
-            <div class="card-inner">
-              <div class="card-front">
-                <figure class="card-image-wrapper">
-                  <img src="https://placehold.co/300x420/0a0a0a/ff5500?text=REZE&font=bebas-neue" alt="Reze — the Bomb Devil hybrid" loading="lazy">
-                  <div class="card-overlay"></div>
-                  <figcaption class="card-name">Reze</figcaption>
-                  <span class="card-role">Bomb Devil</span>
-                </figure>
-              </div>
-              <div class="card-back">
-                <h3>Reze</h3>
-                <p>A mysterious girl who works at a cafe and shows interest in Denji. She is actually a Soviet weapon — the Bomb Devil hybrid — sent to capture Denji's heart, literally and figuratively.</p>
-                <button class="flip-back-btn" aria-label="Flip card back">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-                  Back
-                </button>
-              </div>
+        <!-- Makima -->
+        <article class="character-card reveal-up" data-delay="200">
+          <div class="character-card-inner">
+            <div class="character-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#ffaa00" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="31" text-anchor="middle" fill="#ffaa00" font-size="18">&#9876;</text></svg>
             </div>
-            <button class="card-flip-btn" aria-label="Flip card to see bio">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </article>
-
-          <!-- Himeno -->
-          <article class="character-card tilt-card" role="listitem" data-color="#88cc44">
-            <div class="card-inner">
-              <div class="card-front">
-                <figure class="card-image-wrapper">
-                  <img src="https://placehold.co/300x420/0a0a0a/88cc44?text=HIMENO&font=bebas-neue" alt="Himeno — veteran Devil Hunter" loading="lazy">
-                  <div class="card-overlay"></div>
-                  <figcaption class="card-name">Himeno</figcaption>
-                  <span class="card-role">Ghost Devil Hunter</span>
-                </figure>
-              </div>
-              <div class="card-back">
-                <h3>Himeno</h3>
-                <p>Aki's partner and a veteran Devil Hunter who has lost many partners before him. She contracts with the Ghost Devil and carries the heavy emotional toll of the profession with dark humor.</p>
-                <button class="flip-back-btn" aria-label="Flip card back">
-                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m7-7l-7 7 7 7"/></svg>
-                  Back
-                </button>
-              </div>
+            <h3 class="character-name">Makima</h3>
+            <span class="role-badge role-devil">CONTROL DEVIL</span>
+            <p class="character-desc">The mysterious head of Public Safety Division 4. Beautiful, calculating, and seemingly omniscient. Her true nature is far more terrifying than any Devil Denji has faced.</p>
+            <div class="character-stats">
+              <div class="stat"><span class="stat-label">Control</span><div class="stat-bar"><div class="stat-fill" data-width="100"></div></div></div>
+              <div class="stat"><span class="stat-label">Danger</span><div class="stat-bar"><div class="stat-fill" data-width="100"></div></div></div>
             </div>
-            <button class="card-flip-btn" aria-label="Flip card to see bio">
-              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-            </button>
-          </article>
+          </div>
+        </article>
 
-        </div>
+        <!-- Aki Hayakawa -->
+        <article class="character-card reveal-up" data-delay="300">
+          <div class="character-card-inner">
+            <div class="character-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#4488ff" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="31" text-anchor="middle" fill="#4488ff" font-size="18">&#9876;</text></svg>
+            </div>
+            <h3 class="character-name">Aki Hayakawa</h3>
+            <span class="role-badge role-hunter">DEVIL HUNTER</span>
+            <p class="character-desc">A stoic, revenge-driven Devil Hunter who contracts with the Curse and Future Devils. Initially cold toward Denji, he becomes a reluctant older-brother figure — with a tragic fate awaiting him.</p>
+            <div class="character-stats">
+              <div class="stat"><span class="stat-label">Skill</span><div class="stat-bar"><div class="stat-fill" data-width="85"></div></div></div>
+              <div class="stat"><span class="stat-label">Resolve</span><div class="stat-bar"><div class="stat-fill" data-width="90"></div></div></div>
+            </div>
+          </div>
+        </article>
 
-        <button class="carousel-btn carousel-btn--right chainsaw-nav-btn" aria-label="Scroll characters right">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="3"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
+        <!-- Reze -->
+        <article class="character-card reveal-up" data-delay="400">
+          <div class="character-card-inner">
+            <div class="character-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#ff5500" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="31" text-anchor="middle" fill="#ff5500" font-size="18">&#9876;</text></svg>
+            </div>
+            <h3 class="character-name">Reze</h3>
+            <span class="role-badge role-devil">BOMB DEVIL</span>
+            <p class="character-desc">A mysterious girl who works at a cafe and shows interest in Denji. She is actually a Soviet weapon — the Bomb Devil hybrid — sent to capture Denji's heart, literally and figuratively.</p>
+            <div class="character-stats">
+              <div class="stat"><span class="stat-label">Power</span><div class="stat-bar"><div class="stat-fill" data-width="88"></div></div></div>
+              <div class="stat"><span class="stat-label">Stealth</span><div class="stat-bar"><div class="stat-fill" data-width="80"></div></div></div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Himeno -->
+        <article class="character-card reveal-up" data-delay="500">
+          <div class="character-card-inner">
+            <div class="character-icon" aria-hidden="true">
+              <svg viewBox="0 0 50 50" width="50" height="50"><circle cx="25" cy="25" r="20" fill="none" stroke="#88cc44" stroke-width="1" stroke-dasharray="4 2"/><text x="25" y="31" text-anchor="middle" fill="#88cc44" font-size="18">&#9876;</text></svg>
+            </div>
+            <h3 class="character-name">Himeno</h3>
+            <span class="role-badge role-hunter">GHOST DEVIL HUNTER</span>
+            <p class="character-desc">Aki's partner and a veteran Devil Hunter who has lost many partners before him. She contracts with the Ghost Devil and carries the heavy emotional toll of the profession with dark humor.</p>
+            <div class="character-stats">
+              <div class="stat"><span class="stat-label">Experience</span><div class="stat-bar"><div class="stat-fill" data-width="80"></div></div></div>
+              <div class="stat"><span class="stat-label">Sacrifice</span><div class="stat-bar"><div class="stat-fill" data-width="95"></div></div></div>
+            </div>
+          </div>
+        </article>
+
       </div>
     </div>
   </section>
